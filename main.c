@@ -5,12 +5,16 @@
 int mesvaleurs[4];
 float tabnotes[30];
 int nbNotes=0;
+bool permut=false;
 /*****************prototypes*************************/
 void saisie();
 void affichage();
 void saisieMoyenne();
 void moyenne();
-bool passage(int taille);
+bool passagedec(int taille);
+bool passagecroi(int taille);
+void menu();
+void permutation(int i);
 /*****************implementations********************/
 void saisie() {
     for(int i=0;i<4;i++)
@@ -46,39 +50,76 @@ void moyenne() {
     printf("La moyenne des notes est de %0.2f\n",somme/(float)nbNotes);
 }
 
-bool passage(int taille)
+bool passagedec(int taille)
 {
-    bool permut=false;
+    permut=false;
     int buffer=0;
-    for(int i=0;i<taille;i++)
+    for(int i=0;i<taille-1;i++)
     {
         if(mesvaleurs[i]<mesvaleurs[i+1]) //je teste si la case est suivante est plus grande
         {
-            buffer=mesvaleurs[i];
-            mesvaleurs[i]=mesvaleurs[i+1];
-            mesvaleurs[i+1]=buffer;
-            permut=true;
+            permutation(i);
         }
     }
     return permut;
 }
 
+bool passagecroi(int taille)
+{
+    permut=false;
 
+    for(int i=0;i<taille-1;i++)
+    {
 
-/***********************Exercice n°2**********************************/
+        if(mesvaleurs[i]>mesvaleurs[i+1]) //je teste si la case est suivante est plus grande
+        {
+          permutation(i);
 
+        }
+    }
+    return permut;
+}
+
+void permutation(int i)
+{
+    int buffer=0;
+    buffer=mesvaleurs[i];
+    mesvaleurs[i]=mesvaleurs[i+1];
+    mesvaleurs[i+1]=buffer;
+    permut=true;
+}
+void menu()
+{
+    int taille=4;
+    int choix=0;
+    printf("1-Affichage croissant\n");
+    printf("2-Affichage décroissant\n");
+    scanf("%d",&choix);
+    switch (choix) {
+        case 1:
+            while (passagecroi(taille))
+            {
+                taille--;
+            }
+            break;
+        case 2:
+            while (passagedec(taille))
+            {
+                taille--;
+            }
+            break;
+
+    }
+}
 
 int main() {
-    int taille=4;
-   /******************Exercice n°1********************************/
-   saisie();
-   while(passage(taille))
-   {
-       taille--;
-   }
-   affichage();
-   /*****************Exercice n°2*********************************/
 
+   /******************Exercice n°1********************************/
+    saisie();
+    menu();
+    affichage();
+   /*****************Exercice n°2*********************************/
+    //saisieMoyenne();
 
    return 0;
 }
