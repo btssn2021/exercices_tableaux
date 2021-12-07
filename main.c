@@ -50,7 +50,7 @@ bool passage(int taille)
 {
     bool permut=false;
     int buffer=0;
-    for(int i=0;i<4;i++)
+    for(int i=0;i<taille;i++)
     {
         if(mesvaleurs[i]<mesvaleurs[i+1]) //je teste si la case est suivante est plus grande
         {
